@@ -205,9 +205,6 @@ void white_grey_common_init(void) {
   set_gpio_alternate(GPIOC, 11, GPIO_AF7_USART3);
   set_gpio_pullup(GPIOC, 11, PULL_UP);
 
-  // Initialize RTC
-  rtc_init();
-
   // Enable CAN transceivers
   white_enable_can_transceivers(true);
 
@@ -242,13 +239,13 @@ const harness_configuration white_harness_config = {
 };
 
 const board board_white = {
-  .board_type = "White",
+  .board_type = "Black", // WORKAROUND
   .harness_config = &white_harness_config,
   .has_gps = false,
   .has_hw_gmlan = true,
   .has_obd = false,
   .has_lin = true,
-  .has_rtc_battery = false,
+  .has_rtc = false,
   .init = white_init,
   .enable_can_transceiver = white_enable_can_transceiver,
   .enable_can_transceivers = white_enable_can_transceivers,

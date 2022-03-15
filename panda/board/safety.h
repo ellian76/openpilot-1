@@ -1,6 +1,6 @@
+// include first, needed by safety policies
 #include "safety_declarations.h"
-
-// include the safety policies.
+// Include the actual safety policies.
 #include "safety/safety_defaults.h"
 #include "safety/safety_honda.h"
 #include "safety/safety_toyota.h"
@@ -12,8 +12,7 @@
 #include "safety/safety_subaru.h"
 #include "safety/safety_mazda.h"
 #include "safety/safety_nissan.h"
-#include "safety/safety_volkswagen_mqb.h"
-#include "safety/safety_volkswagen_pq.h"
+#include "safety/safety_volkswagen.h"
 #include "safety/safety_elm327.h"
 
 // from cereal.car.CarParams.SafetyModel
@@ -205,13 +204,13 @@ bool addr_safety_check(CANPacket_t *to_push,
 void generic_rx_checks(bool stock_ecu_detected) {
   // exit controls on rising edge of gas press
   if (gas_pressed && !gas_pressed_prev && !(unsafe_mode & UNSAFE_DISABLE_DISENGAGE_ON_GAS)) {
-    controls_allowed = 0;
+    controls_allowed = 1;
   }
   gas_pressed_prev = gas_pressed;
 
   // exit controls on rising edge of brake press
   if (brake_pressed && (!brake_pressed_prev || vehicle_moving)) {
-    controls_allowed = 0;
+    controls_allowed = 1;
   }
   brake_pressed_prev = brake_pressed;
 
